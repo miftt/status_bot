@@ -2,7 +2,8 @@
 
 import { useState, MouseEventHandler, useRef } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";  
+import axios from "axios";
+import { toast } from "sonner"
 
 type User = {
     id: number;
@@ -30,6 +31,7 @@ const DeleteUser = ({ user }: { user: User }) => {
 
   const handleDelete = async (userId: number) => {
     await axios.delete(`/api/users/${userId}`);
+    toast.success(`User ${user.username} deleted successfully`);
     router.refresh();
     setIsOpen(false);
   };

@@ -10,32 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id       Int      @id @default(autoincrement())
-  username String
-  password String
-  status   String
-  role     String
-  tokens   Tokens[]
-  Data     Data[]
+// File: schema.prisma
+
+// File: schema.prisma
+
+model User {
+  id         Int      @id @unique @default(autoincrement())
+  username   String
+  password   String
+  created_at DateTime @default(now())
+  status     String
+  role       String
+  token      Token[]
 }
 
-model Tokens {
-  id      Int    @id @default(autoincrement())
-  user_id Int
-  token   String
-  user    Users  @relation(fields: [user_id], references: [id])
+model Token {
+  id    Int    @id @unique
+  token String
+  user  User   @relation(fields: [id], references: [id], onDelete: Cascade)
 }
 
-model Data {
-  id          Int      @id @default(autoincrement())
-  user_id     Int
-  slot        Int
-  nick        String
-  status      String
-  world       String
-  uptime      String
-  last_update DateTime
-  bot_info    String
-  user        Users    @relation(fields: [user_id], references: [id])
+model ListBot {
+  id Int @id @unique
 }

@@ -3,17 +3,18 @@
 import { useState, MouseEventHandler, useRef, SyntheticEvent } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner"
 
 type User = {
     id: number;
     username: string;
     status: string;
     role: string;
+    token: string;
 }
 
 type Token = {
     id: number;
-    user_id: number;
     token: string;
 }
 
@@ -22,7 +23,6 @@ const UpdateUser = ({ tokens, user }: { tokens: Token; user: User }) => {
   const [status, setStatus] = useState(user.status);
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(user.role);
-  const [token, setToken] = useState(tokens.token);
 
   const router = useRouter();
 
@@ -55,6 +55,7 @@ const UpdateUser = ({ tokens, user }: { tokens: Token; user: User }) => {
       status: status,
       role: role,
     });
+    toast.success(`User ${user.username} updated successfully`);
     router.refresh();
     setIsOpen(false);
   };
@@ -87,16 +88,6 @@ const UpdateUser = ({ tokens, user }: { tokens: Token; user: User }) => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="input input-bordered"
                 placeholder="Password"
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label font-bold">Token</label>
-              <input
-                type="password"
-                value={token}
-                onChange={(e) => setToken(e.target.value)}
-                className="input input-bordered"
-                placeholder="Token"
               />
             </div>
             <div className="form-control w-full">

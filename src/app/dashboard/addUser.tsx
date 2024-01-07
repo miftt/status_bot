@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, MouseEventHandler, useRef, SyntheticEvent } from "react";
-import type { Tokens } from "@prisma/client";
+import type { Token } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner"
 
-const AddUser = ({ tokens }: { tokens: Tokens[] }) => {
+const AddUser = ({ tokens }: { tokens: Token[] }) => {
   const [username, setUsername] = useState("");
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
@@ -48,6 +49,7 @@ const AddUser = ({ tokens }: { tokens: Tokens[] }) => {
     setPassword("");
     setStatus("");
     setRole("");
+    toast.success(`User ${username} added successfully`);
     router.refresh();
     setIsOpen(false);
   };
