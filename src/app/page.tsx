@@ -4,8 +4,7 @@ import { getServerSession } from "next-auth/next"; // Import useSession
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Card from "../components/fragments/CardTotalBot/Card";
 import DeleteBot from "./deleteBot";
-
-
+import GetToken from "./getToken";
 const prisma = new PrismaClient();
 
 type listBot = {
@@ -28,10 +27,20 @@ async function getData(userId: any){
   return bots;
 }
 
+async function getToken(userId: any){
+  const token = await prisma.token.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+  return token;
+}
+
 export default async function Home({bot} : {bot: listBot}) {
   const session = await getServerSession(authOptions); //// Use useSession to get the session data
   const userId = session?.user?.id; // Get the user id from the session
   const data = await getData(userId);
+  const token = await getToken(userId);
   // const getTotalOnlineBot = data.filter(bot => bot.status === "Online").length
   // const getTotalOfflineBot = data.filter(bot => bot.status === "Offline").length
   // const getTotalBannedBot = data.filter(bot => bot.status === "Banned").length
@@ -49,6 +58,7 @@ export default async function Home({bot} : {bot: listBot}) {
     <div className="flex pt-5">
       <div className="flex-grow items-center justify-center">
         <div className="row">
+          <GetToken token={token[0].token}/>
           <div className="flex gap-5">
             <Card info="" total={data.length}/>
             <Card info="Online" total={getTotalOnlineBot}/>
