@@ -25,7 +25,7 @@ type Token = {
     }
 }
 
-const ChangeToken = ({ tokens }: { tokens: Token}) => {
+const ChangeToken = ({ tokens }: { tokens: Token[]}) => {
   const [userId, setUserId] = useState(Number(''));
   const [token, setToken] = useState("");
 
@@ -75,7 +75,7 @@ const ChangeToken = ({ tokens }: { tokens: Token}) => {
                 <label className="label font-bold">User ID</label>
                 <select onChange={(e) => setUserId(Number(e.target.value))} className="select select-bordered">
                 <option value="" disabled>Select User ID</option>
-                    {tokens.map((token) =>(
+                    {tokens.map((token: any) =>(
                         <option value={Number(token.id)} key={token.id}>{token.id} | {token.username}</option>
                     ))}
                 </select>
