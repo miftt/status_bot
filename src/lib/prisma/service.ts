@@ -32,7 +32,7 @@ export async function register(
     });
 
     if (user){
-        return {status: false, statusCode: 400, message: "Email already registered"};
+        return {status: false, statusCode: 400, message: "Username already registered"};
     }else {
         data.role = "User";
         data.status = 'Nonaktif';

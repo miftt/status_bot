@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import type { Token } from "@prisma/client";
 import bcrypt from "bcrypt";
-
+import { getServerSession } from "next-auth"; // Anda perlu menginstal next-auth untuk ini
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const prisma = new PrismaClient();
 
@@ -10,6 +11,11 @@ export const POST = async (req: Request) => {
     try {
         const body: Token = await req.json();
         const hashedPassword = await bcrypt.hash(body.token, 10);
+        // dapatkan session
+        const session = await getServerSession(authOptions);
+        if (session?.user.role !== "Admin") {
+            return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
+        }
         const token = await prisma.token.create({
             data: {
                 token: hashedPassword,

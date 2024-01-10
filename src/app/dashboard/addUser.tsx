@@ -37,7 +37,7 @@ const AddUser = ({ tokens }: { tokens: Token[] }) => {
     }
 
     // Submit the form
-    await axios.post("/api/users", {
+    await axios.post("/api/auth/register", {
       username: username,
       password: password,
       status: status,
@@ -113,6 +113,7 @@ const AddUser = ({ tokens }: { tokens: Token[] }) => {
                 </option>
                 <option value="Admin">Admin</option>
                 <option value="User">User</option>
+                <option value="Gold">Gold</option>
               </select>
             </div>
             <div className="modal-action">
