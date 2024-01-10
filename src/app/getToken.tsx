@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FiClipboard } from "react-icons/fi";
-import {Toaster, toast} from 'sonner'
+import {toast} from 'sonner'
 interface GetTokenProps {
   token: any;
 }
