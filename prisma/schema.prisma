@@ -15,21 +15,34 @@ datasource db {
 // File: schema.prisma
 
 model User {
-  id         Int      @id @unique @default(autoincrement())
-  username   String
+  id         Int       @id @unique @default(autoincrement())
+  username   String    @unique
   password   String
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   status     String
   role       String
-  token      Token[]
+  token      Token?
+  expireDate DateTime  @default(dbgenerated("(NOW() + INTERVAL '1 month')"))
+  bots       listBot[]
 }
 
 model Token {
-  id    Int    @id @unique
-  token String
-  user  User   @relation(fields: [id], references: [id], onDelete: Cascade)
+  id     Int    @id @unique @default(autoincrement())
+  token  String @unique
+  userId Int    @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model ListBot {
-  id Int @id @unique
+model listBot {
+  id         Int
+  userId     Int
+  namaBot    String
+  status     String
+  world      String
+  uptime     String
+  lastUpdate String
+  botInfo    String
+  user       User   @relation(fields: [userId], references: [id])
+
+  @@unique([id, userId])
 }

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 interface InputProps {
     type: string;
     name: string;
@@ -12,12 +14,29 @@ const Input: React.FC<InputProps> = ({
     id,
     placeholder,
     required
-}) => {
+}) => 
+{
+    const [value, setValue] = useState('');
+    const [warning, setWarning] = useState('');
+
+    const handleKeyDown = (e: any) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+          setWarning('Spasi tidak diperbolehkan');
+        }
+    }
+
+    const handleChange = (e: any) => {
+        setValue(e.target.value.replace(/\s/g, ''));
+    }
+
     return ( 
+        <>
             <input
                 type={type}
                 name={name}
                 id={id}
+                value={value}
                 className="
                  bg-gray-50
                  border 
@@ -32,8 +51,12 @@ const Input: React.FC<InputProps> = ({
                  dark:placeholder-gray-400 
                  dark:text-white"
                  placeholder={placeholder}
-                required={required}
+                 onKeyDown={handleKeyDown}
+                 onChange={handleChange}
+                 required={required}
               />
+            {warning && <p className="text-red-500">{warning}</p>}
+        </>
      );
 }
  

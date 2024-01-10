@@ -6,7 +6,7 @@ import { Toaster, toast } from "sonner";
 
 const RevalidatePage = () => {
   const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('Revalidating');
+  const [loadingText, setLoadingText] = useState('Refreshing');
   const router = useRouter();
   const refresh = () => router.refresh();
 
@@ -14,7 +14,7 @@ const RevalidatePage = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
         setLoadingText((prevLoadingText) => {
-            return prevLoadingText === 'Refreshing...' ? 'Refresh' : `${prevLoadingText}.`;
+            return prevLoadingText === 'Refreshing Data...' ? 'Refresh' : `${prevLoadingText}.`;
         });
     }, 1000);
 
@@ -40,7 +40,7 @@ const RevalidatePage = () => {
     }
   }
     return ( 
-        <div>
+        <div className="mt-2 flex flex-col gap-4">
           <Toaster position="top-center" richColors />
             <button className="btn btn-sm btn-primary" onClick={() => revalidate()}>
             {loading ? loadingText : 'Refresh Data'}

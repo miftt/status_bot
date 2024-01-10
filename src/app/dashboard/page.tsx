@@ -14,6 +14,8 @@ const getData = async () => {
       username: true,
       status: true,
       role: true,
+      created_at: true,
+      expireDate: true,
       token: {
         select: {
           id: true,
@@ -63,19 +65,23 @@ const DashboardPage = async () => {
             <th>Status</th>
             <th>Role</th>
             <th>Token</th>
+            <th>Created at</th>
+            <th>Expire Date</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
-            <tr key={index} className="text-center">
-              <th>{index + 1}</th>
+          {users.sort((a, b) => a.id - b.id).map((user) => (
+            <tr key={user.id} className="text-center">
+              <th>{user.id}</th>
               <td>{user.username}</td>
-              <td>{user.status}</td>
               <td>{user.role}</td>
-              <td>{user.token[0]?.token || "No Token"}</td>
+              <td className={user.status === "Aktif" ? "text-success" : "text-error"}>{user.status}</td>
+              <td>{user.token?.token || "No Token"}</td>
+              <td>{new Date(user.created_at).toLocaleDateString('id-ID')}</td>
+              <td>{new Date(user.expireDate).toLocaleDateString('id-ID')}</td>
               <td className="flex flex-row items-center justify-center ">
-                <UpdateUser user={user} tokens={tokens} />{" "}
+                <UpdateUser user={user} tokens={tokens} />
                 <DeleteUser user={user} />
               </td>
             </tr>

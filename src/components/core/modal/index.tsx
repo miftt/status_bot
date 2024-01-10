@@ -47,7 +47,7 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
     try {
       const res = await signIn("credentials", {
         redirect: false,
-        email: e.target.email.value,
+        username: e.target.username.value,
         password: e.target.password.value,
         callbackUrl: getCallbackurl()
       })
@@ -58,7 +58,7 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
         setIsLoading(false);
         if (res.status === 401) {
           e.target.reset();
-          toast.error('Wrong email or password');
+          toast.error('Wrong username or password');
         }
       }
     } catch (err) {
@@ -66,14 +66,15 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
     }
   }
 
+
+
   const handleRegister = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
     const res = await fetch('api/auth/register',{
       method: 'POST',
       body: JSON.stringify({
-        fullname: e.currentTarget.fullname.value,
-        email: e.currentTarget.email.value,
+        username: e.currentTarget.username.value,
         password: e.currentTarget.password.value
       })
     })
@@ -83,7 +84,7 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
       toast.success("Register success");
       push("/login");
     }else {
-      toast.error("Email has already been exist");
+      toast.error("username has already been exist");
       setIsLoading(false)
     }
   }
@@ -118,23 +119,25 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
           </h3>
           {type === 'register' && (
             <div>
-              <Label htmlFor="fullname">
-                Your fullname
+              <Label htmlFor="username">
+                Username
               </Label>
-              <Input type="text" name="fullname" id="fullname" placeholder="John Konto" required/>
+              <Input type="text" name="username" id="username" placeholder="Johnys" required/>
             </div>
           )}
-          <div>
-            <Label htmlFor="email">
-              Your email
-            </Label>
-            <Input type="email" name="email" id="email" placeholder="example@business.com" required />
-          </div>
+          {type === 'login' && (
+            <div>
+              <Label htmlFor="username">
+                  Username
+              </Label>
+              <Input type="text" name="username" id="username" placeholder="Johnys" required/>
+            </div>  
+          )}
           <div>
            <Label htmlFor="password">
-             Your password
+             Password
            </Label>
-            <Input type="password" name="password" id="password" placeholder="••••••••••••••••" required />
+            <Input type="password" name="password" id="password" placeholder="••••••••••••••" required />
           </div>
           <button
             disabled={isLoading}

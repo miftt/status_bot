@@ -2,23 +2,18 @@
 
 import { useState, MouseEventHandler, useRef, SyntheticEvent } from "react";
 import { toast } from "sonner";
-import { Token } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-// type Tokens = {
-//     id: number;
-//     token: string;
-//     user: {
-//         id: number;
-//         username: string;
-//         status: string;
-//         role: string;
-//         token: string;
-//     }
-// }
+//TODO MEMBENARKAN ERRORNYA KARENA TIDAK KIRIM TYPE DATA NYA DARI INDEX
 
-const AddToken = ({ tokens }: { tokens: Token[] }) => {
+type Tokens = {
+    id: number;
+    token: string;
+    username: string;
+}
+
+const AddToken = ({ tokens }: { tokens: Tokens[] }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [userId, setUserId] = useState(Number(""));
@@ -43,10 +38,9 @@ const AddToken = ({ tokens }: { tokens: Token[] }) => {
     }
 
     await axios.post("/api/tokens", {
-      id: userId,
       token: token,
+      userId: userId,
     });
-
     setUserId(Number(""));
     setToken("");
     toast.success(`Token user ${userId} added successfully`);
@@ -77,7 +71,7 @@ const AddToken = ({ tokens }: { tokens: Token[] }) => {
                 </option>
                 {tokens.map((token) => (
                   <option value={Number(token.id)} key={token.id}>
-                    {token.id}
+                    {token.id} | {token.username}
                   </option>
                 ))}
               </select>

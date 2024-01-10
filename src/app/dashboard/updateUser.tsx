@@ -11,6 +11,7 @@ type User = {
     status: string;
     role: string;
     token: string;
+    expireDate: string;
 }
 
 type Token = {
@@ -22,6 +23,7 @@ const UpdateUser = ({ tokens, user }: { tokens: Token; user: User }) => {
   const [username, setUsername] = useState(user.username);
   const [status, setStatus] = useState(user.status);
   const [password, setPassword] = useState("");
+  const [expireDate, setExpireDate] = useState(user.expireDate);
   const [role, setRole] = useState(user.role);
 
   const router = useRouter();
@@ -54,6 +56,7 @@ const UpdateUser = ({ tokens, user }: { tokens: Token; user: User }) => {
       password: password,
       status: status,
       role: role,
+      expireDate: expireDate,
     });
     toast.success(`User ${user.username} updated successfully`);
     router.refresh();
@@ -91,6 +94,15 @@ const UpdateUser = ({ tokens, user }: { tokens: Token; user: User }) => {
               />
             </div>
             <div className="form-control w-full">
+              <label className="label font-bold">Expire Date</label>
+              <input
+                type="date"
+                value={expireDate}
+                onChange={(e) => setExpireDate(e.target.value)}
+                className="input input-bordered"
+              />
+            </div>
+            <div className="form-control w-full">
               <label className="label font-bold">Status</label>
               <select
                 value={status}
@@ -117,6 +129,7 @@ const UpdateUser = ({ tokens, user }: { tokens: Token; user: User }) => {
                   Select Role
                 </option>
                 <option value="Admin">Admin</option>
+                <option value="Gold">Gold</option>
                 <option value="User">User</option>
               </select>
             </div>

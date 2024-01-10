@@ -1,9 +1,11 @@
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { login } from "@/lib/prisma/service";
+import { compare } from "bcrypt";
 
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt',
     },
@@ -13,10 +15,10 @@ const authOptions: NextAuthOptions = {
             type: 'credentials',
             name: 'Credentials',
             credentials: {
-                email: {
-                    label: 'Email',
-                    type: 'email',
-                    placeholder: 'Email'
+                username: {
+                    label: 'username',
+                    type: 'text',
+                    placeholder: 'username'
                 },
                 password: {
                     label: 'Password',
@@ -25,43 +27,42 @@ const authOptions: NextAuthOptions = {
                 },
             },
             async authorize(credentials) {
-                const { email, password } = credentials as {
-                    email: string;
+                const { username, password } = credentials as {
+                    username: string;
                     password: string;
                 };
-                const user:any = {
-                    id: 1,
-                    name: "Miftah Fauzi",
-                    email: "miftahfauzi012@gmail.com",
-                    role: "admin",
-                }
-                if (email === "miftahfauzi012@gmail.com" && password === "12345678"){
-                    return user;
+                const user:any = await login({username})
+                if (user){
+                    const passwordConfirm = await compare(password, user.password);
+                    if(passwordConfirm){
+                        return user;
+                    }
+                    return null;
                 }
                 else {
-                    return null
+                    return null;
                 };
             }
         })
     ],
     callbacks: {
-        async jwt({ token, account, profile, user}: any){
+        async jwt({ token, account, profile, user, username}: any){
             if (account?.provider === "credentials"){
-                token.email = user.email;
-                token.fullname = user.fullname;
-                token.role = user.role
+                token.role = user.role;
+                token.username = user.username;
+                token.id = user.id
             }
             return token
         },
         async session({ session, token }: any) {
-            if ("email" in token){
-                session.user.email = token.email;
-            }
-            if ("fullname" in token){
-                session.user.fullname = token.fullname;
-            }
             if ("role" in token) {
                 session.user.role = token.role;
+            }
+            if ("username" in token) {
+                session.user.username = token.username;
+            }
+            if ("id" in token) {
+                session.user.id = token.id;
             }
             return session
         }
@@ -72,6 +73,7 @@ const authOptions: NextAuthOptions = {
 }
 
 const handler = NextAuth(authOptions);
+
 
 export {
     handler as GET, handler as POST
