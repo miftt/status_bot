@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 export const DELETE = async (req: NextApiRequest, { params }: { params: { id: string, userId: string }}) => {
     // Dapatkan sesi pengguna
     const session = await getServerSession(authOptions);
-    console.log(session)
+    // console.log(session)
 
     // Jika tidak ada sesi, kembalikan kesalahan
     if (!session) {

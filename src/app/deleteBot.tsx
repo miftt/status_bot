@@ -11,7 +11,7 @@ type Bot = {
 }
 
 const DeleteBot = ({ bot }: { bot: Bot }) => {
-  console.log("bot.id= "+bot.id,"bot.userId= "+ bot.userId);
+//   console.log("bot.id= "+bot.id,"bot.userId= "+ bot.userId);
 
   const router = useRouter();
 
