@@ -8,7 +8,7 @@ interface GetTokenProps {
 }
 
 const GetToken: React.FC<GetTokenProps> = ({ token }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const copyToClipboard = async () => {
     try {

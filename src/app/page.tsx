@@ -1,13 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import Revalidate from "./revalidate/page";
 import { getServerSession } from "next-auth/next"; // Import useSession
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions/authOptions"
 import Card from "../components/fragments/CardTotalBot/Card";
 import DeleteBot from "./deleteBot";
 import GetToken from "./getToken";
 const prisma = new PrismaClient();
 
-type listBot = {
+interface listBot {
   id: number,
   namaBot: string,
   status: string,
@@ -36,7 +37,7 @@ async function getToken(userId: any){
   return token;
 }
 
-export default async function Home({bot} : {bot: listBot}) {
+export default async function Home({bot} : {bot: listBot[]}) {
   const session = await getServerSession(authOptions); //// Use useSession to get the session data
   const userId = session?.user?.id; // Get the user id from the session
   const data = await getData(userId);

@@ -31,6 +31,17 @@ const NavbarPage = () => {
                         </h5>
                     </div>
                     <nav className="flex flex-col gap-1 min-w-[240px] p-2  font-sans text-base font-normal text-gray-700">
+                        {session?.user?.role === "Admin" && (   
+                        <Link
+                            href="/dashboard"
+                            className={`flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 ${pathname === "/dashboard" ? "bg-blue-50 bg-opacity-80 text-blue-900" : ""} hover:text-blue-900 focus:text-blue-900 outline-none` }
+                        >
+                            <div className="grid place-items-center mr-4">
+                                <FiBox/>
+                            </div>
+                            Admin Dashboard
+                        </Link>
+                        )}
                         <Link
                             href="/"
                             className={`flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 ${pathname === "/" ? "bg-blue-50 bg-opacity-80 text-blue-900" : ""} hover:text-blue-900 focus:text-blue-900 outline-none` }

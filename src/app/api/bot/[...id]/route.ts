@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth"; // Anda perlu menginstal next-auth untuk ini
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import type { NextApiRequest } from 'next'
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions/authOptions"
 
 const prisma = new PrismaClient();
 
-export const DELETE = async (req: NextApiRequest, { params }: { params: { id: string, userId: string }}) => {
+export const DELETE = async (req: Request, { params }: { params: { id: string, userId: string }}) => {
     // Dapatkan sesi pengguna
     const session = await getServerSession(authOptions);
     // console.log(session)

@@ -3,7 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import type { User } from "@prisma/client";
 import bcrypt from 'bcrypt'
 import { getServerSession } from "next-auth"; // Anda perlu menginstal next-auth untuk ini
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions/authOptions"
 
 const prisma = new PrismaClient();
 
