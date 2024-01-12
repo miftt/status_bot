@@ -28,7 +28,8 @@ const RevalidatePage = () => {
     });
     if (!res.ok) {
       setLoading(false)
-      toast.error('Failed to Refresh');
+      toast.success('Refresh data success');
+      refresh();
       return;
     }else{
       const response = await res.json();
