@@ -25,7 +25,7 @@ type Token = {
     }
 }
 
-const ChangeToken = ({ tokens }: { tokens: Token[]}) => {
+const ChangeToken = ({ tokens }: { tokens: any[]}) => {
   const [userId, setUserId] = useState(Number(''));
   const [token, setToken] = useState("");
 

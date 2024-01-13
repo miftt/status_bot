@@ -1,12 +1,12 @@
 'use client'
 
 import { useState, MouseEventHandler, useRef, SyntheticEvent } from "react";
-import type { Token } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner"
 
-const AddUser = ({ tokens }: { tokens: Token[] }) => {
+
+const AddUser = ({ users }: { users: any }) => {
   const [username, setUsername] = useState("");
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");

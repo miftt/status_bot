@@ -8,7 +8,7 @@ import DeleteBot from "./deleteBot";
 import GetToken from "./getToken";
 const prisma = new PrismaClient();
 
-interface listBot {
+type listBot = {
   id: number,
   namaBot: string,
   status: string,
@@ -37,7 +37,7 @@ async function getToken(userId: any){
   return token;
 }
 
-export default async function Home({bot} : {bot: listBot[]}) {
+export default async function Home() {
   const session = await getServerSession(authOptions); //// Use useSession to get the session data
   const userId = session?.user?.id; // Get the user id from the session
   const data = await getData(userId);
@@ -101,7 +101,7 @@ export default async function Home({bot} : {bot: listBot[]}) {
                       {data.length === 0 && <tr><td colSpan={7} className="text-center">No data available</td></tr>}
                     </tbody>
                   </table>
-                    <Revalidate/>
+                    {<Revalidate/>}
                   <div className="flex justify-center mt-10">
                   </div>
                 </div>

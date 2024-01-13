@@ -8,7 +8,7 @@ import { Toaster } from "sonner";
 const prisma = new PrismaClient();
 
 const getData = async () => {
-  const res = await prisma.user.findMany({
+  const res = await prisma?.user?.findMany({
     select: {
       id: true,
       username: true,
@@ -53,7 +53,7 @@ const DashboardPage = async () => {
     <div>
       <Toaster position="top-center" richColors />
       <div className="flex flex-row gap-4 mb-4">
-        <AddUser tokens={tokens} />
+        <AddUser users={users} />
         <AddToken tokens={all} />
         <ChangeToken tokens={all} />
       </div>

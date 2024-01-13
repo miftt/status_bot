@@ -13,7 +13,7 @@ type Tokens = {
     username: string;
 }
 
-const AddToken = ({ tokens }: { tokens: Tokens[] }) => {
+const AddToken = ({ tokens }: { tokens: any[] }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [userId, setUserId] = useState(Number(""));
