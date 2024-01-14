@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import Revalidate from "./revalidate/page";
+import Revalidate from "../components/core/revalidate";
 import { getServerSession } from "next-auth/next"; // Import useSession
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { authOptions } from "@/lib/authOptions/authOptions"
@@ -59,7 +59,7 @@ export default async function Home() {
     <div className="flex pt-5">
       <div className="flex-grow items-center justify-center">
         <div className="row">
-          <GetToken token={token[0].token}/>
+        <GetToken token={token && token[0] ? token[0].token : "The token has not been set by the admin"}/>
           <div className="flex gap-5">
             <Card info="" total={data.length}/>
             <Card info="Online" total={getTotalOnlineBot}/>
