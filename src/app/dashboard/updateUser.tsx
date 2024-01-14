@@ -19,7 +19,7 @@ type Token = {
     token: string;
 }
 
-const UpdateUser = ({ tokens, user }: { tokens: any[]; user: any }) => {
+const UpdateUser = ({ user }: { user: any }) => {
   const [username, setUsername] = useState(user.username);
   const [status, setStatus] = useState(user.status);
   const [password, setPassword] = useState("");

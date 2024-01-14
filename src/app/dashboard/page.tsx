@@ -5,10 +5,11 @@ import DeleteUser from "./deleteUser";
 import UpdateUser from "./updateUser";
 import ChangeToken from "./changeToken";
 import { Toaster } from "sonner";
+import Revalidate from "@/components/core/revalidate";
 const prisma = new PrismaClient();
 
-const getData = async () => {
-  const res = await prisma?.user?.findMany({
+async function getData() {
+  const users = await prisma?.user?.findMany({
     select: {
       id: true,
       username: true,
@@ -24,38 +25,18 @@ const getData = async () => {
       },
     },
   });
-  return res;
+  return users;
 };
 
-// Contoh perubahan di fungsi getToken
-const allusers = async () => {
-  const allUsers = await prisma.user.findMany();
-  // console.log(allUsers);
-  return allUsers;
-};
-const getToken = async () => {
-  const res = await prisma.token.findMany({
-    select: {
-      id: true,
-      token: true,
-    },
-  });
-  return res;
-};
-
-const DashboardPage = async () => {
-  const [users, tokens, all] = await Promise.all([
-    getData(),
-    getToken(),
-    allusers(),
-  ]);
+export default async function DashboardPage() {
+ const users = await getData();
   return (
     <div>
       <Toaster position="top-center" richColors />
       <div className="flex flex-row gap-4 mb-4">
         <AddUser users={users} />
-        <AddToken tokens={all} />
-        <ChangeToken tokens={all} />
+        <AddToken tokens={users} />
+        <ChangeToken tokens={users} />
       </div>
       <table className="table w-full">
         <thead>
@@ -71,25 +52,24 @@ const DashboardPage = async () => {
           </tr>
         </thead>
         <tbody>
-          {users.sort((a, b) => a.id - b.id).map((user) => (
+          {users.sort((i, j) => i.id - j.id).map((user) => (
             <tr key={user.id} className="text-center">
               <th>{user.id}</th>
               <td>{user.username}</td>
               <td>{user.role}</td>
               <td className={user.status === "Aktif" ? "text-success" : "text-error"}>{user.status}</td>
-              <td>{user.token?.token || "No Token"}</td>
+              <td>{user?.token?.token || "No Token"}</td>
               <td>{new Date(user.created_at).toLocaleDateString('id-ID')}</td>
               <td>{new Date(user.expireDate).toLocaleDateString('id-ID')}</td>
               <td className="flex flex-row items-center justify-center ">
-                <UpdateUser user={user} tokens={tokens} />
+                <UpdateUser user={user} />
                 <DeleteUser user={user} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Revalidate/>
     </div>
   );
 };
-
-export default DashboardPage;
