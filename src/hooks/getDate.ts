@@ -6,6 +6,7 @@
 
 const getDate = () => {
     let date = new Date();
+    date.setHours(date.getHours() + 7); // Menambahkan 7 jam untuk WIB.
     let waktu = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     let tanggal = date.getDate();
     let bulan = date.getMonth() + 1; // Bulan dimulai dari 0, jadi kita tambahkan 1.
