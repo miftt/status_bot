@@ -7,7 +7,9 @@
 const getDate = () => {
     let date = new Date();
     date.setHours(date.getHours() + 7); // Menambahkan 7 jam untuk WIB.
-    let waktu = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    let waktu = date.getHours().toString().padStart(2, '0') + ":" + 
+                date.getMinutes().toString().padStart(2, '0') + ":" + 
+                date.getSeconds().toString().padStart(2, '0');
     let tanggal = date.getDate();
     let bulan = date.getMonth() + 1; // Bulan dimulai dari 0, jadi kita tambahkan 1.
     let tahun = date.getFullYear();
