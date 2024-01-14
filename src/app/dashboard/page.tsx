@@ -54,7 +54,7 @@ export default async function DashboardPage() {
         <tbody>
           {users.sort((i, j) => i.id - j.id).map((user) => (
             <tr key={user.id} className="text-center">
-              <th>{user.id}</th>
+              <td>{user.id}</td>
               <td>{user.username}</td>
               <td>{user.role}</td>
               <td className={user.status === "Aktif" ? "text-success" : "text-error"}>{user.status}</td>
