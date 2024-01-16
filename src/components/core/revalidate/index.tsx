@@ -1,5 +1,6 @@
 'use client'
 
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
@@ -23,15 +24,15 @@ const RevalidatePage = () => {
 
   const revalidate = async () => {
     setLoading(true)
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?tag=bot&secret=${process.env.SECRET_REVALIDATE}`,{
+    const res = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?tag=bot&secret=mifuzigantengbanget`,{
       method: 'POST',
     });
-    if (!res.ok){
+    if (res.status !== 200) {
       setLoading(false);
       toast.error(`Revalidate Failed`);
       return 
   } else {
-      const response = await res.json();
+      const response = await res.data
       if(response.revalidate){
           toast.success(`Revalidate Success`);
       };
