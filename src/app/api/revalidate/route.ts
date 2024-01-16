@@ -11,7 +11,7 @@ export async function POST(request: NextRequest){
     const tag = request.nextUrl.searchParams.get('tag');
     const secret = request.nextUrl.searchParams.get('secret');
 
-    if(secret !== "mifuzi12345"){
+    if(secret !== process.env.NEXT_PUBLIC_API_URL){
         return NextResponse.json({
             status: 401,
             message: "Invalid secret"

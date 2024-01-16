@@ -23,22 +23,20 @@ const RevalidatePage = () => {
 
   const revalidate = async () => {
     setLoading(true)
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?tag=bot&secret=mifuzi12345`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?tag=bot&secret=${process.env.NEXT_PUBLIC_API_URL}`,{
       method: 'POST',
     });
-    if (!res.ok) {
-      setLoading(false)
-      toast.success('Refresh data success');
-      refresh();
-      return;
-    }else{
+    if (!res.ok){
+      setLoading(false);
+      toast.error(`Revalidate Failed `);
+      return
+  } else {
       const response = await res.json();
-      if (response.revalidate) {
-        toast.success('Refresh data success');
-        refresh();
+      if(response.revalidate){
+          toast.success(`Revalidate Success`);
       };
-      setLoading(false)
-    }
+      setLoading(false);
+  }   
   }
     return ( 
         <div className="mt-2 flex flex-col gap-4">

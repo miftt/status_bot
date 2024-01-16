@@ -10,7 +10,7 @@ import DeleteToken from "./deleteToken";
 const prisma = new PrismaClient();
 
 async function getData() {
-  const users = await prisma?.user?.findMany({
+  const users = await prisma.user.findMany({
     select: {
       id: true,
       username: true,
