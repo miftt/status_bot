@@ -24,7 +24,7 @@ const RevalidatePage = () => {
 
   const revalidate = async () => {
     setLoading(true)
-    const res = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?tag=bot&secret=${process.env.SECRET_REVALIDATE}`,{
+    const res = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?tag=bot&secret=mifuzigantengbanget`,{
       method: 'POST',
     });
     if (res.status !== 200) {
