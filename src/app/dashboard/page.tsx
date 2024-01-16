@@ -62,7 +62,7 @@ export default async function DashboardPage() {
               <td className={user.status === "Aktif" ? "text-success" : "text-error"}>{user.status}</td>
               <td className="flex text-center justify-center items-center ">
               {user?.token?.token || "No Token"}
-              {user?.token?.token && <DeleteToken token={user} username={user.username}/>}
+              {user?.token?.token && <DeleteToken token={user}/>}
             </td>
               <td>{new Date(user.created_at).toLocaleDateString('id-ID')}</td>
               <td>{new Date(user.expireDate).toLocaleDateString('id-ID')}</td>
