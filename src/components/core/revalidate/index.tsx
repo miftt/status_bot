@@ -28,8 +28,8 @@ const RevalidatePage = () => {
     });
     if (!res.ok){
       setLoading(false);
-      toast.error(`Revalidate Failed `);
-      return
+      toast.error(`Revalidate Failed`);
+      return 
   } else {
       const response = await res.json();
       if(response.revalidate){
