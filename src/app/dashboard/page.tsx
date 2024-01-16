@@ -6,6 +6,7 @@ import UpdateUser from "./updateUser";
 import ChangeToken from "./changeToken";
 import { Toaster } from "sonner";
 import Revalidate from "@/components/core/revalidate";
+import DeleteToken from "./deleteToken";
 const prisma = new PrismaClient();
 
 async function getData() {
@@ -21,6 +22,7 @@ async function getData() {
         select: {
           id: true,
           token: true,
+          userId: true,
         },
       },
     },
@@ -58,7 +60,10 @@ export default async function DashboardPage() {
               <td>{user.username}</td>
               <td>{user.role}</td>
               <td className={user.status === "Aktif" ? "text-success" : "text-error"}>{user.status}</td>
-              <td>{user?.token?.token || "No Token"}</td>
+              <td className="flex text-center justify-center items-center ">
+              {user?.token?.token || "No Token"}
+              {user?.token?.token && <DeleteToken token={user} username={user.username}/>}
+            </td>
               <td>{new Date(user.created_at).toLocaleDateString('id-ID')}</td>
               <td>{new Date(user.expireDate).toLocaleDateString('id-ID')}</td>
               <td className="flex flex-row items-center justify-center ">

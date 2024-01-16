@@ -5,8 +5,6 @@ import { toast } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-//TODO MEMBENARKAN ERRORNYA KARENA TIDAK KIRIM TYPE DATA NYA DARI INDEX
-
 type Tokens = {
     id: number;
     token: string;
@@ -43,7 +41,7 @@ const AddToken = ({ tokens }: { tokens: any[] }) => {
     });
     setUserId(Number(""));
     setToken("");
-    toast.success(`Token user ${userId} added successfully`);
+    toast.success(`Token user with ID ${userId} added successfully`);
     router.refresh();
     setIsOpen(false);
   };

@@ -58,7 +58,7 @@ const NavbarPage = () => {
                             <div className="grid place-items-center mr-4">
                                 <FiBox/>
                             </div>
-                            List Item
+                            Item List
                         </Link>
                     </nav>
                 </div>
