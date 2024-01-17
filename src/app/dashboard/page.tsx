@@ -30,6 +30,8 @@ async function getData() {
   return users;
 };
 
+export const dynamic = 'force-dynamic'
+
 export default async function DashboardPage() {
  const users = await getData();
   return (
