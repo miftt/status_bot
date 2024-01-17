@@ -29,7 +29,7 @@ const DeleteToken = ({token}: {token: any}) => {
       };
     return ( 
         <div >
-            <button className="text-red-500 pl-4 hover:text-red-600" onClick={() => handleModal()}>
+            <button className="py-2 px-2 rounded-md text-red-500 hover:bg-red-700" onClick={() => handleModal()}>
                 <RiDeleteBin5Fill size={18}/>
             </button>
             <div className={isOpen ? "modal modal-open" : "modal"} onClick={close} ref={overlay}>

@@ -38,7 +38,7 @@ const DeleteUser = ({ user }: { user: User }) => {
 
   return (
     <div>
-      <button className="btn btn-error   btn-sm" onClick={handleModal}>
+      <button className="btn btn-error btn-sm" onClick={handleModal}>
         Delete
       </button>
       <div className={isOpen ? "modal modal-open" : "modal"} onClick={close} ref={overlay}>
