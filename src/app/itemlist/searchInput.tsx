@@ -26,7 +26,7 @@ const SearchInput = () => {
                 <div className="relative">
                     <select value={searchType} onChange={(e) => setSearchType(e.target.value)} className="inline-flex w-2/4 px-4 py-2 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">
                         <option value="q">Name</option>
-                        <option value="id">ID</option>
+                        <option value="id">itemID</option>
                     </select>
                     <input
                         value={searchQuery || ''}

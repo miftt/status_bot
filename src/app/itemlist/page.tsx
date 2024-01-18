@@ -28,10 +28,7 @@ const ListItems =  () => {
     const queryType = searchQuery ? 'q' : 'id';
     const queryValue = searchQuery || idQuery || '';
     const encodedQueryValue = encodeURI(queryValue);
-    console.log(`queryType: ${queryType}, queryValue: ${queryValue}, encodedQueryValue: ${encodedQueryValue}`);
-
     const {data, isLoading} = useSWR<{items: Item[]}>(`${process.env.NEXT_PUBLIC_API_URL}/api/itemlist?${queryType}=${encodedQueryValue}&page=${currentPage}&itemsPerPage=${itemsPerPage}`,getData);
-    console.log(data);
     useEffect(() => {
         setCurrentPage(1);
     }, [searchQuery]);
