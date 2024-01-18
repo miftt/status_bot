@@ -72,7 +72,7 @@ const ListItems =  () => {
                             Showing <span className="font-semibold text-gray-900 dark:text-white">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-semibold text-gray-900 dark:text-white">{currentPage * itemsPerPage}</span> of <span className="font-semibold text-gray-900 dark:text-white">{data?.items?.length}</span> Entries
                         </span>
                         <div className="inline-flex mt-2 xs:mt-0">
-                            <button className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+                            <button className={`flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${currentPage === 1 ? 'cursor-not-allowed' : ''}`} onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
                                 <FiArrowLeft size={17}/>
                                 Prev
                             </button>
