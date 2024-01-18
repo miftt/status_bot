@@ -67,7 +67,7 @@ const ListItems =  () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-center items-center">
+                <div className="flex flex-col justify-center items-center mb-20">
                         <span className="text-sm text-gray-700 dark:text-gray-400">
                             Showing <span className="font-semibold text-gray-900 dark:text-white">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-semibold text-gray-900 dark:text-white">{currentPage * itemsPerPage}</span> of <span className="font-semibold text-gray-900 dark:text-white">{data?.items?.length}</span> Entries
                         </span>
