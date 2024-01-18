@@ -53,7 +53,7 @@ const NavbarPage = () => {
                         </Link>
                         <Link
                             href="/itemlist"
-                            className={`flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 ${pathname === "/listitem" ? "bg-blue-50 bg-opacity-80 text-blue-900" : ""} hover:text-blue-900 focus:text-blue-900 outline-none` }
+                            className={`flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 ${pathname === "/itemlist" ? "bg-blue-50 bg-opacity-80 text-blue-900" : ""} hover:text-blue-900 focus:text-blue-900 outline-none` }
                         >
                             <div className="grid place-items-center mr-4">
                                 <FiBox/>
