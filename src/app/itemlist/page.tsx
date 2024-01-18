@@ -23,10 +23,15 @@ const ListItems =  () => {
     const itemsPerPage = 10;
 
     const search = useSearchParams();
-    const searchQuery = search ? search.get('q') : null;
-    const encodedSearchQuery = encodeURI(searchQuery || '');
-    const {data, isLoading} = useSWR<{items: Item[]}>(`${process.env.NEXT_PUBLIC_API_URL}/api/itemlist?q=${encodedSearchQuery}&page=${currentPage}&itemsPerPage=${itemsPerPage}`,getData);
+    const searchQuery = search.get('q');
+    const idQuery = search.get('id');
+    const queryType = searchQuery ? 'q' : 'id';
+    const queryValue = searchQuery || idQuery || '';
+    const encodedQueryValue = encodeURI(queryValue);
+    console.log(`queryType: ${queryType}, queryValue: ${queryValue}, encodedQueryValue: ${encodedQueryValue}`);
 
+    const {data, isLoading} = useSWR<{items: Item[]}>(`${process.env.NEXT_PUBLIC_API_URL}/api/itemlist?${queryType}=${encodedQueryValue}&page=${currentPage}&itemsPerPage=${itemsPerPage}`,getData);
+    console.log(data);
     useEffect(() => {
         setCurrentPage(1);
     }, [searchQuery]);

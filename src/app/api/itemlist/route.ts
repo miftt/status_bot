@@ -65116,27 +65116,27 @@ const itemList = [
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id");
+  const id = Number(searchParams.get("id"));
   const q = searchParams.get("q");
   const page = Number(searchParams.get("page")) || 1;
   const itemsPerPage = Number(searchParams.get("itemsPerPage")) || 10;
 
   let items = itemList;
 
-  // Filter items if query parameter 'q' is provided
-  if (q) {
-    items = items.filter(item => item.name.toLowerCase().includes(q.toLowerCase()));
-  }
-
   // If 'id' is provided, find the item with the corresponding 'id'
   if (id) {
-    const item = items.find(item => item.itemID === Number(id));
+    const item = items.find(item => item.itemID === id);
 
     if (!item) {
       return NextResponse.json({ error: 'Item not found' }, { status: 404 });
     }
 
-    return NextResponse.json(item);
+    return NextResponse.json({items: [item]});
+  }
+
+  // Filter items if query parameter 'q' is provided
+  if (q) {
+    items = items.filter(item => item.name.toLowerCase().includes(q.toLowerCase()));
   }
 
   // Calculate start and end index for pagination
@@ -65148,3 +65148,4 @@ export async function GET(req: NextRequest) {
     items: items.slice(startIndex, endIndex)
   });
 }
+
