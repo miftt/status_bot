@@ -24,14 +24,14 @@ const SearchInput = () => {
             <form className="w-2/4 relative" onSubmit={onSearch}>
                 <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div className="relative">
-                    <select value={searchType} onChange={(e) => setSearchType(e.target.value)} className="inline-flex w-2/4 px-4 py-2 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">
-                        <option value="q">Name</option>
-                        <option value="id">itemID</option>
+                    <select value={searchType} onChange={(e) => setSearchType(e.target.value)} className="inline-flex w-2/8 px-4 py-2 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">
+                        <option value="q">Short by Name</option>
+                        <option value="id">Short by itemID</option>
                     </select>
                     <input
                         value={searchQuery || ''}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Search here..."
                     />
                     {searchQuery && (

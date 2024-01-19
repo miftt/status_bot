@@ -5,12 +5,14 @@ import useSWR from "swr";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 const getData = async (url: string) => {
+    await new Promise((r) => setTimeout(r, 300));
     const response = await fetch(url);
     if (!response.ok) {
         throw new Error('Failed to fetch data');
     }
     return response.json();
 }
+
 
 interface Item {
     itemID: number;
@@ -28,7 +30,7 @@ const ListItems =  () => {
     const queryType = searchQuery ? 'q' : 'id';
     const queryValue = searchQuery || idQuery || '';
     const encodedQueryValue = encodeURI(queryValue);
-    const {data, isLoading} = useSWR<{items: Item[]}>(`${process.env.NEXT_PUBLIC_API_URL}/api/itemlist?${queryType}=${encodedQueryValue}&page=${currentPage}&itemsPerPage=${itemsPerPage}`,getData);
+    const {data} = useSWR<{items: Item[]}>(`${process.env.NEXT_PUBLIC_API_URL}/api/itemlist?${queryType}=${encodedQueryValue}&page=${currentPage}&itemsPerPage=${itemsPerPage}`,getData);
     useEffect(() => {
         setCurrentPage(1);
     }, [searchQuery]);
@@ -37,7 +39,7 @@ const ListItems =  () => {
 
     return ( 
             <>
-                <div className="flex items-center justify-center mt-24">
+                <div className="flex items-center justify-center mt-2">
                     <table className="w-1/2 justify-center items-center text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -66,6 +68,7 @@ const ListItems =  () => {
                                     </td>
                                 </tr>  
                             ))}
+                            {data?.items?.length === 0 && <tr><td colSpan={7} className="text-error text-center text-base">Item Not Found</td></tr>}
                         </tbody>
                     </table>
                 </div>
