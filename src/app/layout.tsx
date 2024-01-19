@@ -7,8 +7,8 @@ import { SessionProvider } from 'next-auth/react'
 const inter = Inter({ subsets: ['latin'] })
 
 import Sidebar from './sidebar'
-import Footer from './footer'
 import { usePathname } from 'next/navigation'
+import { Toaster } from 'sonner'
 
 // export const metadata: Metadata = {
 //   title: 'Table Bot Mifuzi',
@@ -27,9 +27,13 @@ export default function RootLayout({
     <html lang="en">
       <SessionProvider>
         <body className={inter.className}>
-          {!disableNavbar.includes(pathname) && <Sidebar/>}
-            {children}
-          {/* <Footer/> */}
+          <div className='flex h-screen flex-row justify-start'>
+            {!disableNavbar.includes(pathname) && <Sidebar/>}
+            <div className='flex-1 p-4'>
+              <Toaster position="top-center" richColors />
+              {children}
+            </div>
+          </div>
         </body>
       </SessionProvider>
     </html>
