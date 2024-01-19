@@ -4,13 +4,13 @@ import AddToken from "./addToken";
 import DeleteUser from "./deleteUser";
 import UpdateUser from "./updateUser";
 import ChangeToken from "./changeToken";
-import { Toaster } from "sonner";
 import Revalidate from "@/components/core/revalidate";
 import DeleteToken from "./deleteToken";
 import CopyToken from "./copyToken";
 const prisma = new PrismaClient();
 
 async function getData() {
+  await new Promise((r) => setTimeout(r, 2000));
   const users = await prisma.user.findMany({
     select: {
       id: true,
@@ -37,7 +37,6 @@ export default async function DashboardPage() {
  const users = await getData();
   return (
     <div>
-      <Toaster position="top-center" richColors />
       <div className="flex flex-row gap-4 mb-4">
         <AddUser users={users} />
         <AddToken tokens={users} />
@@ -46,7 +45,7 @@ export default async function DashboardPage() {
       <table className="table w-full">
         <thead>
           <tr className="text-center">
-            <th>#</th>
+            <th>ID</th>
             <th>Username</th>
             <th>Status</th>
             <th>Role</th>

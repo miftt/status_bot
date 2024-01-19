@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 const RevalidatePage = () => {
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,6 @@ const RevalidatePage = () => {
 
   return (
     <div className="mt-2 flex flex-col gap-4">
-      <Toaster position="top-center" richColors/>
       <button className="btn btn-sm btn-primary" onClick={() => revalidate()}>
         {loading ? loadingText : 'Refresh Data'}
       </button>

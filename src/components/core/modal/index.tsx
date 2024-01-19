@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter} from 'next/navigation';
-import {Toaster, toast} from 'sonner'
+import {toast} from 'sonner'
 import { FcGoogle } from "react-icons/fc";
 
 import Input from '@/components/Input';
@@ -98,7 +98,6 @@ const LogReg: React.FC<LogRegProps> = ({type, searchParams}) => {
     flex-col
     "
     >
-    <Toaster position="top-center" richColors/>
       <div className="
         bg-white 
         shadow-md 
