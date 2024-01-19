@@ -6,9 +6,19 @@ import { MouseEventHandler, useRef, useState } from "react";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { toast } from "sonner";
 
-const DeleteToken = ({token}: {token: any}) => {
-    const router = useRouter();
+interface tokens {
+    id: number;
+    userId: number;
+    username: string;
+}
 
+const DeleteToken: React.FC<tokens> = ({
+    id,
+    userId,
+    username
+}) => {
+    const router = useRouter();
+    console.log(id, userId, username);
     const [isOpen, setIsOpen] = useState(false);
     const overlay = useRef(null);
     const close: MouseEventHandler = (e) => {
@@ -22,6 +32,7 @@ const DeleteToken = ({token}: {token: any}) => {
       };
     
       const handleDelete = async (id: number, userId: number, username: string) => {
+        console.log(id, userId, username);
         await axios.delete(`/api/tokens/${id}/${userId}`);
         toast.success(`Token for user ${username} has been deleted successfully`);
         router.refresh();
@@ -34,12 +45,12 @@ const DeleteToken = ({token}: {token: any}) => {
             </button>
             <div className={isOpen ? "modal modal-open" : "modal"} onClick={close} ref={overlay}>
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Are u sure want to delete token for user {token.username}?</h3>
+                    <h3 className="font-bold text-lg">Are u sure want to delete token for user {username}?</h3>
                     <div className="modal-action">
                         <button type="button" className="btn btn-error" onClick={handleModal}>
                             No
                         </button>
-                        <button onClick={() => handleDelete(token?.token?.id, token?.token?.userId, token.username)} type="button" className="btn btn-primary">
+                        <button onClick={() => handleDelete(id, userId, username)} type="button" className="btn btn-primary">
                             Yes
                         </button>
                     </div>
