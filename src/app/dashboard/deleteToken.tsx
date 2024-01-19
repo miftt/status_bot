@@ -18,7 +18,6 @@ const DeleteToken: React.FC<tokens> = ({
     username
 }) => {
     const router = useRouter();
-    console.log(id, userId, username);
     const [isOpen, setIsOpen] = useState(false);
     const overlay = useRef(null);
     const close: MouseEventHandler = (e) => {
@@ -32,7 +31,6 @@ const DeleteToken: React.FC<tokens> = ({
       };
     
       const handleDelete = async (id: number, userId: number, username: string) => {
-        console.log(id, userId, username);
         await axios.delete(`/api/tokens/${id}/${userId}`);
         toast.success(`Token for user ${username} has been deleted successfully`);
         router.refresh();
