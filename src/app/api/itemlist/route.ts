@@ -65128,7 +65128,9 @@ export async function GET(req: NextRequest) {
     const item = items.find(item => item.itemID === id);
 
     if (!item) {
-      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+      return NextResponse.json({
+        items: []
+      });
     }
 
     return NextResponse.json({items: [item]});
