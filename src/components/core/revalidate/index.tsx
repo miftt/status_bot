@@ -16,7 +16,7 @@ const RevalidatePage = () => {
       setLoadingDots((prevLoadingDots) => {
         return prevLoadingDots >= 3 ? 0 : prevLoadingDots + 1;
       });
-    }, 1000);
+    }, 500);
 
     return () => clearInterval(intervalId); // Clear interval on unmount
   }, []);
