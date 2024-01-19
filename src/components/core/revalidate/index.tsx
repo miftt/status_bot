@@ -36,6 +36,7 @@ const RevalidatePage = () => {
       if(response.revalidate){
           toast.success(`Revalidate Success`);
       };
+      refresh();
       setLoading(false);
   }   
   }
