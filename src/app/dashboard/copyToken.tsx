@@ -2,9 +2,11 @@
 
 import { FiClipboard } from "react-icons/fi";
 import { toast } from "sonner";
-type CopyTokenProps = {
+
+interface CopyTokenProps {
     token: string
 }
+
 const CopyToken: React.FC<CopyTokenProps> = ({token}) => {
     const copyToClipboard = async () => {
         try {

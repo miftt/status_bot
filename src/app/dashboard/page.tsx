@@ -67,8 +67,14 @@ export default async function DashboardPage() {
               {user?.token?.token || "No Token"}
               {user?.token?.token && (
                 <>
-                  <CopyToken token={user.token.token}/>
-                  <DeleteToken id={user.token.id} userId={user.token.userId} username={user.username}/>
+                  <CopyToken 
+                    token={user.token.token}
+                  />
+                  <DeleteToken 
+                    id={user.token.id} 
+                    userId={user.token.userId} 
+                    username={user.username}
+                  />
                 </>
               )}
               </td>
