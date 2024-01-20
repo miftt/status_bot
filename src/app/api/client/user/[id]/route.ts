@@ -33,11 +33,16 @@ export const PATCH = async (req: Request, { params }: { params: { id: string }})
     if (body.password && body.password.trim() !== "") {
         data.password = hashedPassword;
     }
-    if (session === null || session?.user?.id !== Number(params.id)) {
+    if (session === null) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }else if(confirmOldPassword === false) {
-            return NextResponse.json({ error: "Wrong old password" }, { status: 401 });
-    }else {
+    }
+    else if(session?.user?.id !== Number(params.id)) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    else if(confirmOldPassword === false) {
+        return NextResponse.json({ error: "Wrong old password" }, { status: 401 });
+    }
+    else {
         try {
             const user = await prisma.user.update({
                 where: {
@@ -54,7 +59,6 @@ export const PATCH = async (req: Request, { params }: { params: { id: string }})
         } catch (error) {
             return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
         }
-    
     }
 }
 
