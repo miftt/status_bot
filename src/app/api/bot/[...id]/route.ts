@@ -9,22 +9,28 @@ const prisma = new PrismaClient();
 export const DELETE = async (req: Request, { params }: { params: { id: string, userId: string }}) => {
     // Dapatkan sesi pengguna
     const session = await getServerSession(authOptions);
+    
     // console.log(session)
 
     // Jika tidak ada sesi, kembalikan kesalahan
     if (!session) {
         return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
     }
-
-    // Jika ada sesi, lanjutkan dengan permintaan
-    const bot = await prisma.listBot.delete({
-        where: {
-            id_userId: {
-                id: Number(params.id[0]),
-                userId: Number(params.id[1])
+    else if(session?.user.id !== Number(params.id[1])){
+        return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
+    }
+    else {
+        // Jika ada sesi, lanjutkan dengan permintaan
+        const bot = await prisma.listBot.delete({
+            where: {
+                id_userId: {
+                    id: Number(params.id[0]),
+                    userId: Number(params.id[1])
+                }
             }
-        }
-    });
+        });
+    
+        return NextResponse.json(bot, { status: 200 });
+    }
 
-    return NextResponse.json(bot, { status: 200 });
 }
