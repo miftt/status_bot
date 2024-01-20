@@ -26,6 +26,7 @@ export const metadata: Metadata = {
 
 // Anda perlu menyediakan userId saat memanggil fungsi ini
 async function getData(userId: any){
+  await new Promise((r) => setTimeout(r, 1000));
   const bots = await prisma.listBot.findMany({
     where: {
       userId: userId,
@@ -35,6 +36,7 @@ async function getData(userId: any){
 }
 
 async function getToken(userId: any){
+  await new Promise((r) => setTimeout(r, 1000));
   const token = await prisma.token.findMany({
     where: {
       userId: userId,
@@ -43,11 +45,27 @@ async function getToken(userId: any){
   return token;
 }
 
+async function getBotStatus(userId: any){
+  await new Promise((r) => setTimeout(r, 1000));
+  const bots = await prisma.user.findFirst({
+    select: {
+      status_bot: true
+    },
+    where: {
+      id: userId
+    }
+  });
+  return bots;
+}
+
 export default async function Home() {
   const session = await getServerSession(authOptions); //// Use useSession to get the session data
   const userId = session?.user?.id; // Get the user id from the session
-  const data = await getData(userId);
-  const token = await getToken(userId);
+  const [data, token, botStatus] = await Promise.all([
+    getData(userId), 
+    getToken(userId), 
+    getBotStatus(userId)
+  ]);
   // const getTotalOnlineBot = data.filter(bot => bot.status === "Online").length
   // const getTotalOfflineBot = data.filter(bot => bot.status === "Offline").length
   // const getTotalBannedBot = data.filter(bot => bot.status === "Banned").length
@@ -76,6 +94,8 @@ export default async function Home() {
           <div className="col-md-12">
             <div className="card border border-gray-300">
               <div className="card-body">
+                <p className="text-sm w-fit">Set Status Bot:</p>
+                <p className={`text-black text-sm font-medium w-fit rounded-md ${botStatus?.status_bot === "Online" ? "bg-success": "bg-error"}`}>{botStatus?.status_bot}</p>
                 <h5 className="card-main-title">Bot Status Table</h5>
                 <div className="table-responsive">
                   <table className="table table-zebra">
