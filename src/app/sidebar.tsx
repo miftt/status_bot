@@ -87,7 +87,7 @@ const NavbarPage = () => {
                     </nav>
                     <button
                         onClick={() => handleLogout()}
-                        className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 hover:text-blue-900  outline-none "
+                        className="flex items-center w-full p-3 text-error rounded-lg text-start leading-tight transition-all hover:bg-red-500 hover:bg-opacity-20 hover:text-red-500  outline-none "
                     >
                         <div className="grid place-items-center mr-4">
                             <FiLogOut/>
