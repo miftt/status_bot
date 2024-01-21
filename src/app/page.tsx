@@ -7,6 +7,7 @@ import Card from "../components/fragments/CardTotalBot/Card";
 import DeleteBot from "./deleteBot";
 import GetToken from "./getToken";
 import { Metadata } from "next";
+import ToogleBot from "@/components/fragments/toggleStatusBot";
 const prisma = new PrismaClient();
 
 type listBot = {
@@ -82,9 +83,9 @@ export default async function Home() {
   return (
     <div className="flex pt-5">
       <div className="flex-grow items-center justify-center">
-        <div className="row">
+        <div className="flex flex-col items-center justify-start">
         <GetToken token={token && token[0] ? token[0].token : "The token has not been set by the admin"}/>
-          <div className="flex gap-5">
+          <div className="grid grid-cols-3 gap-4">
             <Card info="" total={data.length}/>
             <Card info="Online" total={getTotalOnlineBot}/>
             <Card info="Offline" total={getTotalOfflineBot}/>
@@ -95,6 +96,7 @@ export default async function Home() {
             <div className="card border border-gray-300">
               <div className="card-body">
                 <p className="text-sm w-fit">Set Status Bot:</p>
+                <ToogleBot status={botStatus?.status_bot || ""}/>
                 <p className={`text-black text-sm font-medium w-fit rounded-md ${botStatus?.status_bot === "Online" ? "bg-success": "bg-error"}`}>{botStatus?.status_bot}</p>
                 <h5 className="card-main-title">Bot Status Table</h5>
                 <div className="table-responsive">
