@@ -14,6 +14,7 @@ const ChangePassword: React.FC<User> = ({
 }) => {
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -31,8 +32,8 @@ const ChangePassword: React.FC<User> = ({
   };
 
   const handleUpdate = async (e: SyntheticEvent) => {
+    setIsLoading(true);
     e.preventDefault();
-  
     try {
       await axios.patch(`/api/client/user/${userId}`, {
         password: password,
@@ -49,6 +50,7 @@ const ChangePassword: React.FC<User> = ({
         toast.error("An unexpected error occurred");
       }
     }
+    setIsLoading(false);
   };
   
 
@@ -87,8 +89,8 @@ const ChangePassword: React.FC<User> = ({
               <button type="button" className="btn" onClick={handleModal}>
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary">
-                Submit
+              <button type="submit" className={`btn btn-primary`} disabled={isLoading}>
+                {isLoading ? "Updating..." : "Update"}
               </button>
             </div>
           </form>

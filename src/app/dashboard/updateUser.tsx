@@ -25,6 +25,7 @@ const UpdateUser = ({ user }: { user: any }) => {
   const [password, setPassword] = useState("");
   const [expireDate, setExpireDate] = useState(user.expireDate);
   const [role, setRole] = useState(user.role);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -42,6 +43,7 @@ const UpdateUser = ({ user }: { user: any }) => {
   };
 
   const handleUpdate = async (e: SyntheticEvent) => {
+    setIsLoading(true);
     e.preventDefault();
 
     // Check if any field is empty
@@ -59,8 +61,9 @@ const UpdateUser = ({ user }: { user: any }) => {
       expireDate: expireDate,
     });
     toast.success(`User ${user.username} updated successfully`);
-    router.refresh();
+    setIsLoading(false);
     setIsOpen(false);
+    router.refresh();
   };
 
   return (
@@ -137,8 +140,8 @@ const UpdateUser = ({ user }: { user: any }) => {
               <button type="button" className="btn" onClick={handleModal}>
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary">
-                Update
+              <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                {isLoading ? "Updating..." : "Update"}
               </button>
             </div>
           </form>
