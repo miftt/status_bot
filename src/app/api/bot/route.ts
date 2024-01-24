@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     }
   })
 
-  if (isActive?.status !== 'Aktif') {
+  if (new Date(userWithToken.expireDate) < new Date() && isActive?.status !== 'Aktif') {
     return NextResponse.json({
       status: 401,
       message: 'Status user ini tidak aktif. Hubungi Developer untuk memperbarui status.',
@@ -89,6 +89,32 @@ export async function POST(req: NextRequest) {
       status: 401
     });
   }
+
+  if(userWithToken.expireDate < new Date()){
+    const updateExpireDate = await prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        status: 'Nonaktif'
+      }
+    })
+    return NextResponse.json({
+      message: 'kadaluarsa bang',
+      data: updateExpireDate.expireDate
+    },{
+      status: 403
+    })
+  }
+
+  // if (new Date(userWithToken.expireDate) === new Date() && isActive?.status !== 'Aktif') {
+  //   return NextResponse.json({
+  //     status: 401,
+  //     message: 'Status user ini tidak aktif. Hubungi Developer untuk memperbarui status.',
+  //   }, {
+  //     status: 401
+  //   });
+  // }
 
   if (existingBot) {
     const updatedBot = await prisma.listBot.update({
