@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FiLogOut, FiHome, FiBox} from "react-icons/fi";
+import { MdDashboard } from "react-icons/md";
 import { LuUserCog2 } from "react-icons/lu";
 import { GrUserAdmin } from "react-icons/gr";
 import { HiMenu } from "react-icons/hi";
@@ -31,14 +32,14 @@ const NavbarPage = () => {
     }
     return (
         <>
-            <button
+            {/* <button
                 onClick={toggleMenu}
                 className={`${menuVisible ? "rounded-r-lg" : ""} flex top-4 p-3 focus:outline-none text-black hover:text-blue-500 bg-clip-border bg-white shadow-xl shadow-blue-gray-900/5`}
             >
                 <HiMenu size={25} />
             </button>
-            {!menuVisible && (
-            <div className="flex flex-col bg-clip-border rounded-r-lg bg-white text-gray-700 h-full w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+            {!menuVisible && ( */}
+            <div className="fixed flex flex-col border bg-clip-border rounded-xl bg-white text-gray-700 h-[935px] w-1/5 max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
                 <div>
                     <div className="mb-2 p-4">
                         <h5 className="block antialiased tracking-normal font-sans text-xl font-semibold leading-snug text-gray-900">
@@ -57,6 +58,15 @@ const NavbarPage = () => {
                             Admin Dashboard
                         </Link>
                         )}
+                        <Link
+                            href="/dashboards"
+                            className={`flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 ${pathname === "/dashboards" ? "bg-blue-50 bg-opacity-80 text-blue-900" : ""} hover:text-blue-900 outline-none` }
+                        >
+                            <div className="grid place-items-center mr-4">
+                                <MdDashboard />
+                            </div>
+                            Dashboard
+                        </Link>
                         <Link
                             href="/"
                             className={`flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 ${pathname === "/" ? "bg-blue-50 bg-opacity-80 text-blue-900" : ""} hover:text-blue-900 outline-none` }
@@ -96,7 +106,7 @@ const NavbarPage = () => {
                     </button>
                 </div>  
             </div>
-            )}
+            {/* )} */}
         </>
     );
 }

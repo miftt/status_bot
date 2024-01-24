@@ -44,7 +44,9 @@ export default function RootLayout({
       <SessionProvider>
         <body className={inter.className}>
           <div className='flex h-screen flex-row justify-start'>
-            {!shouldDisableNavbar(pathname) && <Sidebar/>}
+            <div className='w-[15%] m-6'>
+              {!shouldDisableNavbar(pathname) && <Sidebar/>}
+            </div>
             <div className='flex-1 p-4'>
               <Toaster position="top-center" richColors />
               {children}
