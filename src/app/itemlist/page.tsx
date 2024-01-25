@@ -40,8 +40,8 @@ const ListItems =  () => {
     return ( 
             <>
                 <div className="flex items-center justify-center mt-2">
-                    <table className="w-1/2 justify-center items-center text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table className="w-1/2 justify-center items-center text-sm text-left table table-zebra rtl:text-right">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
                                     Item ID
@@ -56,8 +56,8 @@ const ListItems =  () => {
                         </thead>
                         <tbody>
                             {data?.items?.map((item) => (
-                                <tr key={item.itemID} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <tr key={item.itemID} className="bg-white border-b">
+                                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {item.itemID}
                                     </td>
                                     <td className="px-6 py-4">
@@ -74,7 +74,7 @@ const ListItems =  () => {
                 </div>
                 <div className="flex flex-col justify-center items-center mb-20">
                         <span className="text-sm text-gray-700 dark:text-gray-400">
-                            Showing <span className="font-semibold text-gray-900 dark:text-white">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-semibold text-gray-900 dark:text-white">{currentPage * itemsPerPage}</span> of <span className="font-semibold text-gray-900 dark:text-white">{data?.items?.length}</span> Entries
+                            Showing <span className="font-semibold text-gray-900 ">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-semibold text-gray-900">{currentPage * itemsPerPage}</span> of <span className="font-semibold text-gray-900">{data?.items?.length}</span> Entries
                         </span>
                         <div className="inline-flex mt-2 xs:mt-0">
                             <button className={`flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${currentPage === 1 ? 'cursor-not-allowed' : ''}`} onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>

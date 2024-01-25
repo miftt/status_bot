@@ -38,7 +38,7 @@ const DeleteBot = ({ bot }: { bot: Bot }) => {
 
   return (
     <div>
-      <button className="btn btn-error   btn-sm" onClick={handleModal}>
+      <button className="btn bg-[rgb(255,70,84)] btn-sm text-white" onClick={handleModal}>
         Delete
       </button>
       <div className={isOpen ? "modal modal-open" : "modal"} onClick={close} ref={overlay}>
