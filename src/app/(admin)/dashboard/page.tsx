@@ -47,8 +47,8 @@ export default async function DashboardPage() {
           <tr className="text-center">
             <th>ID</th>
             <th>Username</th>
-            <th>Status</th>
             <th>Role</th>
+            <th>Status</th>
             <th>Token</th>
             <th>Created at</th>
             <th>Expire Date</th>
