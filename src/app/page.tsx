@@ -3,9 +3,7 @@ import Revalidate from "../components/core/revalidate";
 import { getServerSession } from "next-auth/next"; // Import useSession
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { authOptions } from "@/lib/authOptions/authOptions"
-import Card from "../components/fragments/CardTotalBot/Card";
 import DeleteBot from "./deleteBot";
-import GetToken from "./getToken";
 import { Metadata } from "next";
 import ToogleBot from "@/components/fragments/toggleStatusBot";
 const prisma = new PrismaClient();
@@ -36,15 +34,6 @@ async function getData(userId: any){
   return bots;
 }
 
-async function getToken(userId: any){
-  await new Promise((r) => setTimeout(r, 1000));
-  const token = await prisma.token.findMany({
-    where: {
-      userId: userId,
-    },
-  });
-  return token;
-}
 
 async function getBotStatus(userId: any){
   await new Promise((r) => setTimeout(r, 1000));
@@ -62,42 +51,20 @@ async function getBotStatus(userId: any){
 export default async function Home() {
   const session = await getServerSession(authOptions); //// Use useSession to get the session data
   const userId = session?.user?.id; // Get the user id from the session
-  const [data, token, botStatus] = await Promise.all([
+  const [data, botStatus] = await Promise.all([
     getData(userId), 
-    getToken(userId), 
     getBotStatus(userId)
   ]);
-  // const getTotalOnlineBot = data.filter(bot => bot.status === "Online").length
-  // const getTotalOfflineBot = data.filter(bot => bot.status === "Offline").length
-  // const getTotalBannedBot = data.filter(bot => bot.status === "Banned").length
-  // const getTotalSuspendBot = data.filter(bot => bot.status === "Suspended").length
-  const botStatusCounts = data.reduce((counts: any, bot) => {
-    counts[bot.status] = (counts[bot.status] || 0) + 1;
-    return counts;
-  }, {});
-  
-  const getTotalOnlineBot = botStatusCounts["Online"] || 0;
-  const getTotalOfflineBot = botStatusCounts["Offline"] || 0;
-  const getTotalBannedBot = botStatusCounts["Banned"] || 0;
-  const getTotalSuspendBot = botStatusCounts["Suspended"] || 0;
   return (
     <div className="flex pt-5">
       <div className="flex-grow items-center justify-center">
         <div className="flex flex-col items-center justify-start">
-        <GetToken token={token && token[0] ? token[0].token : "The token has not been set by the admin"}/>
-          <div className="grid grid-cols-3 gap-4">
-            <Card info="" total={data.length}/>
-            <Card info="Online" total={getTotalOnlineBot}/>
-            <Card info="Offline" total={getTotalOfflineBot}/>
-            <Card info="Banned" total={getTotalBannedBot}/>
-            <Card info="Suspended" total={getTotalSuspendBot}/>
-          </div>
           <div className="col-md-12">
             <div className="card border border-gray-300">
               <div className="card-body">
                 <p className="text-sm w-fit">Set Status Bot:</p>
-                <ToogleBot status={botStatus?.status_bot || ""}/>
-                <p className={`text-black text-sm font-medium w-fit rounded-md ${botStatus?.status_bot === "Online" ? "bg-success": "bg-error"}`}>{botStatus?.status_bot}</p>
+                  <ToogleBot status={botStatus?.status_bot || ""}/>
+                <p className={`text-white text-sm font-medium w-[75px] text-center rounded-md ${botStatus?.status_bot === "Online" ? "bg-success": "bg-[rgb(255,70,84)]"}`}>{botStatus?.status_bot}</p>
                 <h5 className="card-main-title">Bot Status Table</h5>
                 <div className="table-responsive">
                   <table className="table table-zebra">
