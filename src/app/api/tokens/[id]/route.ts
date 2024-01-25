@@ -8,6 +8,25 @@ import { authOptions } from "@/lib/authOptions/authOptions"
 
 const prisma = new PrismaClient();
 
+export const GET = async (req: Request, { params }: { params: { id: string }}) => {
+    const session = await getServerSession(authOptions);
+    if(!session){
+        return NextResponse.json({error: "Must login first"}, {status: 401})
+    }else if(session?.user?.id !== Number(params.id)){
+        return NextResponse.json({error: "The session id not match with the user id"}, {status: 401})
+    }
+    const token = await prisma.token.findUnique({
+        where: {
+            userId: Number(params.id)
+        },select:{
+            token: true
+        }
+    })
+    return NextResponse.json({
+        status: 200, data: token
+    },{status: 200});
+}
+
 export const PATCH = async (req: Request, { params }: { params: { id: string }}) => {
     const body: Token = await req.json();
     const hashedToken = await bcrypt.hash(body.token, 10);
