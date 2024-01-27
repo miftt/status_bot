@@ -1,23 +1,8 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-
+import { getBotStatusAPI } from "@/lib/prisma/service";
 
 export async function GET(req: Request, { params }: {params: {id: string, token: string}}) {
-    const getStatusBot = async () => {
-        const data = await prisma.user.findUnique({
-            where: {
-                id: Number(params.id[0]),
-            },
-            select: {
-                status_bot: true,
-                token: true,
-            }
-        })
-        return data;
-    }
-    const data = await getStatusBot();
-
+    const data = await getBotStatusAPI(Number(params.id[0]), params.id[1]);
     if(!params.id[1]){
         return NextResponse.json({
             status: 401,
@@ -25,7 +10,7 @@ export async function GET(req: Request, { params }: {params: {id: string, token:
         },{
             status: 401
         })
-    }else if(params.id[1] !== data?.token?.token){
+    }else if(!params.id[1]){
         return NextResponse.json({
             status: 401,
             error: "Method Not Allowed",
@@ -33,6 +18,6 @@ export async function GET(req: Request, { params }: {params: {id: string, token:
             status: 401
         })
     }
-    return new NextResponse(data?.status_bot, { status: 200 });
+    return new NextResponse(data, { status: 200 });
   }
   

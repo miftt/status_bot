@@ -1,8 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions/authOptions';
 
 import getDate from '@/hooks/getDate';
+import { getDataBot } from '@/lib/prisma/service';
+
+export async function GET(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  const { searchParams } = new URL(req.url);
+  const userId = Number(searchParams.get('userid'));
+  if(!userId){
+    return NextResponse.json({
+      status: 400,
+    }, {
+      status: 400
+    })
+  }else if(!session){
+    return NextResponse.json({
+      status: 401,
+      message: 'Must login first',
+    },{
+      status: 401
+    })
+  }else if(session?.user?.id !== Number(userId)){
+    return NextResponse.json({
+      status: 401,
+      message: 'The session id not match with the user id',
+    },{
+      status: 401
+    })
+  }
+  const res = await getDataBot(userId);
+  return NextResponse.json({
+    status: 200,
+    data: res,
+  }, {
+    status: 200
+  });
+}
+
 
 export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
