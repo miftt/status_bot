@@ -48,3 +48,52 @@ export async function register(
     }   
 }
 
+
+export async function getDataBot(userId: any){
+    const listBot = await prisma.listBot.findMany({
+        where: {
+            userId: userId
+        }
+    })
+    if (listBot){
+        return listBot;
+    }
+    else{
+        return null;
+    }
+}
+
+export async function getBotStatusFromWeb(userId: number){
+    const statusUserBot = await prisma.user.findUnique({
+        select: {
+            status_bot: true
+        },
+        where: {
+            id: userId
+        }
+    })
+    if(statusUserBot){
+        return statusUserBot;
+    }else {
+        return null;
+    }
+}
+export async function getBotStatusAPI(userId: number, token: string){
+    const statusUserBot = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        select:{
+            status_bot: true,
+            token: true
+        }
+    })
+    if(token !== statusUserBot?.token?.token){
+        return 'Method Not Allowed';
+    }
+    if(statusUserBot){
+        return statusUserBot?.status_bot;
+    }else {
+        return null;
+    }
+}
