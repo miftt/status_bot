@@ -10,21 +10,56 @@ import { BiNoSignal } from "react-icons/bi";
 import { FaBan } from "react-icons/fa";
 import { GrPowerShutdown } from "react-icons/gr";
 import Card from "./Card";
+import { client } from "@/lib/supabase/init";
 
 
 const DashboardsPage = () => {
     const { data: session } = useSession();
     const userId = session?.user?.id;
-    const [botStatus, setBots] = useState([]);
+    // const [botStatus, setBots] = useState([]);
 
+    // useEffect(() => {
+    //     if (userId) {
+    //         fetch(`/api/bot/getdatabot/${userId}`)
+    //           .then(response => response.json())
+    //           .then(data => setBots(data));
+    //     }
+    // }, [userId]);
+    const [dataBot, setDataBot] = useState<any[]>([]);
     useEffect(() => {
-        if (userId) {
-            fetch(`/api/bot/getdatabot/${userId}`)
-              .then(response => response.json())
-              .then(data => setBots(data));
+      if(userId){
+      const getDataBot = async () => {
+        const {data, error } = await client
+        .from('listBot')
+        .select('*')
+        .eq('userId', userId)
+        if(data){
+          setDataBot(data)
         }
-    }, [userId]);
-    const botStatusCounts = botStatus.reduce((counts: any, bot:listBot) => {
+      }
+      getDataBot();
+    }
+    const channel = client.channel('bot').on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'listBot' },
+      (payload) => {
+        console.log(payload);
+        if (payload.eventType === 'DELETE') {
+          setDataBot((prevData) => prevData.filter((item) => item.id !== payload.old.id));
+        } else if (payload.eventType === 'INSERT') {
+          setDataBot((prevData) => [...prevData, payload.new]);
+        } else if (payload.eventType === 'UPDATE') {
+          setDataBot((prevData) => prevData.map((item) => item.id === payload.new.id ? payload.new : item));
+        }
+      })
+    .subscribe();
+    
+      return () => {
+        channel.unsubscribe();
+      }
+
+    },[userId]);
+    const botStatusCounts = dataBot.reduce((counts: any, bot:listBot) => {
         counts[bot.status] = (counts[bot.status] || 0) + 1;
         return counts;
     }, {});
@@ -36,7 +71,7 @@ const DashboardsPage = () => {
     return ( 
         <div>
             <div className="grid gap-y-1 gap-x-1 md:grid-cols-2 xl:grid-cols-3">
-                <Card icon={<BsRobot size={40}/>} title="" total={botStatus.length} description="50%"/>
+                <Card icon={<BsRobot size={40}/>} title="" total={dataBot.length} description="50%"/>
                 <Card icon={<FaSignal size={40}/>} title="Online" total={getTotalOnlineBot} description="50%"/>
                 <Card icon={<BiNoSignal size={40}/>} title="Ofline" total={getTotalOfflineBot} description="50%"/>
                 <Card icon={<FaBan size={40}/>} title="Banned" total={getTotalBannedBot} description="50%"/>
