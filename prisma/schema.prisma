@@ -35,7 +35,7 @@ model Token {
 }
 
 model listBot {
-  id         Int
+  id         Int    @id
   userId     Int
   namaBot    String
   status     String
@@ -44,6 +44,7 @@ model listBot {
   lastUpdate String
   botInfo    String
   user       User   @relation(fields: [userId], references: [id])
+  uniqId     Int    @unique @default(autoincrement())
 
   @@unique([id, userId])
 }
