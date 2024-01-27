@@ -4,6 +4,7 @@ import { useState, MouseEventHandler, useRef } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner"
+import { MdDelete } from "react-icons/md";
 
 type Bot = {
     id: number;
@@ -11,7 +12,6 @@ type Bot = {
 }
 
 const DeleteBot = ({ bot }: { bot: Bot }) => {
-//   console.log("bot.id= "+bot.id,"bot.userId= "+ bot.userId);
 
   const router = useRouter();
 
@@ -39,7 +39,7 @@ const DeleteBot = ({ bot }: { bot: Bot }) => {
   return (
     <div>
       <button className="btn bg-[rgb(255,70,84)] btn-sm text-white" onClick={handleModal}>
-        Delete
+        <MdDelete size={18}/>
       </button>
       <div className={isOpen ? "modal modal-open" : "modal"} onClick={close} ref={overlay}>
         <div className="modal-box">
