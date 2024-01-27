@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { getBotStatusAPI } from "@/lib/prisma/service";
+import { getBotStatusPublicAPI } from "@/lib/prisma/service";
 
 export async function GET(req: Request, { params }: {params: {id: string, token: string}}) {
-    const data = await getBotStatusAPI(Number(params.id[0]), params.id[1]);
+    const data = await getBotStatusPublicAPI(Number(params.id[0]), params.id[1]);
     if(!params.id[1]){
         return NextResponse.json({
             status: 401,
