@@ -3,6 +3,13 @@ import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient();
 
+
+/**
+ * Fungsi login untuk mencari pengguna berdasarkan username.
+ * @param {Object} data - Objek yang berisi username pengguna.
+ * @param {string} data.username - Username pengguna.
+ * @returns {Object|null} Mengembalikan objek pengguna jika ditemukan, atau null jika tidak.
+ */
 export async function login(data: {username: string}){
     const user = await prisma.user.findUnique({
         where: {
@@ -17,6 +24,15 @@ export async function login(data: {username: string}){
 }
 
 
+/**
+ * Fungsi register untuk mendaftarkan pengguna baru.
+ * @param {Object} data - Objek yang berisi detail pengguna.
+ * @param {string} data.username - Username pengguna.
+ * @param {string} data.password - Password pengguna.
+ * @param {string} data.role - Role pengguna.
+ * @param {string} data.status - Status pengguna.
+ * @returns {Object} Mengembalikan objek yang berisi status, kode status, dan pesan.
+ */
 export async function register(
     data: {
         username: string;
@@ -49,6 +65,11 @@ export async function register(
 }
 
 
+/**
+ * Fungsi getDataBot untuk mendapatkan daftar bot berdasarkan userId.
+ * @param {any} userId - ID pengguna.
+ * @returns {Array|null} Mengembalikan array bot jika ditemukan, atau null jika tidak.
+ */
 export async function getDataBot(userId: any){
     const listBot = await prisma.listBot.findMany({
         where: {
@@ -63,6 +84,12 @@ export async function getDataBot(userId: any){
     }
 }
 
+
+/**
+ * Fungsi getBotStatusFromWeb untuk mendapatkan status bot dari web berdasarkan userId.
+ * @param {number} userId - ID pengguna.
+ * @returns {Object|null} Mengembalikan objek status bot jika ditemukan, atau null jika tidak.
+ */
 export async function getBotStatusFromWeb(userId: number){
     const statusUserBot = await prisma.user.findUnique({
         select: {
@@ -78,7 +105,17 @@ export async function getBotStatusFromWeb(userId: number){
         return null;
     }
 }
-export async function getBotStatusAPI(userId: number, token: string){
+
+/**
+ * Fungsi getBotStatusPublicAPI untuk mendapatkan status bot melalui API publik
+ * berdasarkan userId dan token.
+ * @param {number} userId - ID pengguna.
+ * @param {string} token - Token pengguna.
+ * @returns {string|null} Mengembalikan status bot jika
+ * token valid dan ditemukan, 'Method Not Allowed' jika token tidak valid, 
+ * atau null jika tidak ditemukan.
+ */
+export async function getBotStatusPublicAPI(userId: number, token: string){
     const statusUserBot = await prisma.user.findUnique({
         where: {
             id: userId
