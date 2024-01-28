@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { getServerSession } from "next-auth"; // Anda perlu menginstal next-auth untuk ini
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions/authOptions"
-
-const prisma = new PrismaClient();
+import { deleteListBot } from "@/lib/prisma/service";
 
 export const DELETE = async (req: Request, { params }: { params: { id: string, userId: string }}) => {
     // Dapatkan sesi pengguna
@@ -20,17 +17,8 @@ export const DELETE = async (req: Request, { params }: { params: { id: string, u
         return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
     }
     else {
-        // Jika ada sesi, lanjutkan dengan permintaan
-        const bot = await prisma.listBot.delete({
-            where: {
-                id_userId: {
-                    id: Number(params.id[0]),
-                    userId: Number(params.id[1])
-                }
-            }
-        });
-    
-        return NextResponse.json(bot, { status: 200 });
+        const res = await deleteListBot(Number(params.id[0]), Number(params.id[1]));
+        return NextResponse.json({ status: 200, message: "Success delete bot", data: res }, { status: 200 });
     }
 
 }

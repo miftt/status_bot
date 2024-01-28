@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions/authOptions"
-const prisma = new PrismaClient();
+import { updateStatusBot } from "@/lib/prisma/service";
 
 export const PATCH = async (req: Request, { params }: {params: {id: string}}) => {
     const session = await getServerSession(authOptions);
@@ -13,17 +12,10 @@ export const PATCH = async (req: Request, { params }: {params: {id: string}}) =>
     }else if(session?.user.id !== Number(params.id)) {
         return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
     }else{
-        const updateStatus = await prisma.user.update({
-            where:{
-                id: Number(params.id)
-            },
-            data:{
-                status_bot: body.status
-            }
-        })
+        const res = await updateStatusBot(Number(params.id), body.status)
         return NextResponse.json({
             status: 200,
-            data: updateStatus.status_bot
+            data: res?.status_bot
         },({
             status: 200
         }))
