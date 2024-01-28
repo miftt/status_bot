@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import AddUser from "./addUser";
 import AddToken from "./addToken";
 import DeleteUser from "./deleteUser";
@@ -7,34 +6,12 @@ import ChangeToken from "./changeToken";
 import Revalidate from "@/components/core/revalidate";
 import DeleteToken from "./deleteToken";
 import CopyToken from "./copyToken";
-const prisma = new PrismaClient();
-
-async function getData() {
-  await new Promise((r) => setTimeout(r, 2000));
-  const users = await prisma.user.findMany({
-    select: {
-      id: true,
-      username: true,
-      status: true,
-      role: true,
-      created_at: true,
-      expireDate: true,
-      token: {
-        select: {
-          id: true,
-          token: true,
-          userId: true,
-        },
-      },
-    },
-  });
-  return users;
-};
+import { getAllUsers } from "@/lib/prisma/service";
 
 export const dynamic = 'force-dynamic'
 
 export default async function DashboardPage() {
- const users = await getData();
+ const users = await getAllUsers();
   return (
     <div>
       <div className="flex flex-row gap-4 mb-4">
