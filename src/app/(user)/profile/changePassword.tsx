@@ -36,7 +36,7 @@ const ChangePassword: React.FC<User> = ({
     e.preventDefault();
     try {
       await axios.patch(`/api/client/user/${userId}`, {
-        password: password,
+        newPassword: password,
         oldPassword: oldPassword
       });
   
@@ -61,26 +61,26 @@ const ChangePassword: React.FC<User> = ({
       </button>
       <div className={isOpen ? "modal modal-open" : "modal"} onClick={close} ref={overlay}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Change Password</h3>
+          <h3 className="font-bold text-black text-lg">Change Password</h3>
           <form onSubmit={handleUpdate}>
             <div className="form-control w-full">
-              <label className="label font-bold">Old password</label>
+              <label className="label text-gray-500">Old password</label>
               <input
                 type="password"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
-                className="input input-bordered"
+                className="input input-bordered text-black"
                 placeholder="****"
                 required
               />
             </div>
             <div className="form-control w-full">
-              <label className="label font-bold">New password</label>
+              <label className="label text-gray-500">New password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="input input-bordered"
+                className="input input-bordered text-black"
                 placeholder="****"
                 required
               />
