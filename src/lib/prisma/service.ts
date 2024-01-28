@@ -134,3 +134,37 @@ export async function getBotStatusPublicAPI(userId: number, token: string){
         return null;
     }
 }
+
+
+/**
+ * Fungsi getAllUsers untuk mendapatkan semua pengguna.
+ * Fungsi ini mengambil data pengguna dari database menggunakan prisma.
+ * Data yang dipilih mencakup id, username, status, role, created_at, expireDate,
+ * dan token pengguna.
+ * @returns {Array} Mengembalikan array pengguna jika ditemukan, atau array kosong
+ * jika tidak.
+ */
+export async function getAllUsers(){
+    const users = await prisma.user.findMany({
+        select: {
+            id: true,
+            username: true,
+            status: true,
+            role: true,
+            created_at: true,
+            expireDate: true,
+            token: {
+              select: {
+                id: true,
+                token: true,
+                userId: true,
+              },
+            },
+          },
+    });
+    if(users){
+        return users;
+    }else {
+        return [];
+    }
+}
