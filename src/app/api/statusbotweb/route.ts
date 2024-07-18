@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
     const session = await getServerSession(authOptions);
     const { searchParams } = new URL(req.url);
-    const userId = Number(searchParams.get('userid'));
+    const userId = searchParams.get('userid') || "";
     if(!session) {
         return NextResponse.json({
             status: 401,
@@ -14,7 +14,7 @@ export async function GET(req: Request) {
         },{
             status: 401
         })
-    }else if(session?.user?.id !== Number(userId)) {
+    }else if(session?.user?.id !== userId) {
         return NextResponse.json({
             status: 401,
             message: 'The session id not match with the user id'

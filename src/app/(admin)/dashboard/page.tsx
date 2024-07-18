@@ -12,6 +12,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function DashboardPage() {
  const users = await getAllUsers();
+ console.log(users)
   return (
     <div>
       <div className="flex flex-row gap-4 mb-4">
@@ -33,7 +34,7 @@ export default async function DashboardPage() {
           </tr>
         </thead>
         <tbody>
-          {users.sort((i, j) => i.id - j.id).map((user) => (
+          {users.sort((i: any, j: any) => i.id - j.id).map((user: any) => (
             <tr key={user.id} className="text-center">
               <td>{user.id}</td>
               <td>{user.username}</td>

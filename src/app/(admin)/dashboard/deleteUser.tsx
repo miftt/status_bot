@@ -4,9 +4,10 @@ import { useState, MouseEventHandler, useRef } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner"
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 type User = {
-    id: number;
+    id: string;
     username: string;
     status: string;
     role: string;
@@ -29,7 +30,7 @@ const DeleteUser = ({ user }: { user: User }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleDelete = async (userId: number) => {
+  const handleDelete = async (userId: string) => {
     await axios.delete(`/api/users/${userId}`);
     toast.success(`User ${user.username} deleted successfully`);
     router.refresh();
@@ -38,8 +39,8 @@ const DeleteUser = ({ user }: { user: User }) => {
 
   return (
     <div>
-      <button className="btn btn-error btn-sm" onClick={handleModal}>
-        Delete
+      <button className="btn btn-error btn-sm text-white" onClick={handleModal}>
+        <RiDeleteBin5Fill/>
       </button>
       <div className={isOpen ? "modal modal-open" : "modal"} onClick={close} ref={overlay}>
         <div className="modal-box">

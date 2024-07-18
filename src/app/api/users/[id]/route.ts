@@ -10,7 +10,7 @@ export const DELETE = async (req: Request, { params }: { params: { id: string }}
     if (session?.user.role !== "Admin") {
         return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
     }
-    const res = await deleteUser(Number(params.id));
+    const res = await deleteUser(params.id);
     return NextResponse.json(res, { status: 200 });
 }
 
@@ -23,7 +23,7 @@ export const PATCH = async (req: Request, { params }: { params: { id: string }})
         return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
     }
     const data = {
-        id: Number(params.id),
+        id: params.id,
         username: body.username,
         password: body.password,
         status: body.status,

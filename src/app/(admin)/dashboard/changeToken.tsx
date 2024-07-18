@@ -26,7 +26,7 @@ type Token = {
 }
 
 const ChangeToken = ({ tokens }: { tokens: any[]}) => {
-  const [userId, setUserId] = useState(Number(''));
+  const [userId, setUserId] = useState('');
   const [token, setToken] = useState("");
 
   const router = useRouter();
@@ -73,10 +73,10 @@ const ChangeToken = ({ tokens }: { tokens: any[]}) => {
           <form onSubmit={handleUpdate}>
           <div className="form-control w-full">
                 <label className="label font-bold">User ID</label>
-                <select onChange={(e) => setUserId(Number(e.target.value))} className="select select-bordered">
+                <select onChange={(e) => setUserId(e.target.value)} className="select select-bordered">
                 <option value="" disabled>Select User ID</option>
                     {tokens.map((token: any) =>(
-                        <option value={Number(token.id)} key={token.id}>{token.id} | {token.username}</option>
+                        <option value={token.id} key={token.id}>{token.id} | {token.username}</option>
                     ))}
                 </select>
                 </div>

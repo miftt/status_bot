@@ -9,10 +9,10 @@ export const PATCH = async (req: Request, { params }: {params: {id: string}}) =>
 
     if(!session) {
         return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
-    }else if(session?.user.id !== Number(params.id)) {
+    }else if(session?.user.id !== params.id) {
         return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
     }else{
-        const res = await updateStatusBot(Number(params.id), body.status)
+        const res = await updateStatusBot(params.id, body.status)
         return NextResponse.json({
             status: 200,
             data: res?.status_bot

@@ -14,7 +14,7 @@ export const DELETE = async (req: Request, { params }: { params: { id: string, u
         return NextResponse.json({ error: "Method Not Allowed" }, { status: 401 });
     }
     // Jika ada sesi, lanjutkan dengan permintaan
-    const res = await deleteToken(Number(params.id[0]), Number(params.id[1]));
+    const res = await deleteToken(Number(params.id[0]), params.id[1]);
 
     return NextResponse.json(res, { status: 200 });
 }

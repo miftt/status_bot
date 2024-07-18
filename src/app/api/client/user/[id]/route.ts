@@ -16,12 +16,12 @@ export const PATCH = async (req: Request, { params }: { params: { id: string }})
     if (session === null) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    else if(session?.user?.id !== Number(params.id)) {
+    else if(session?.user?.id !== params.id) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     else {
         try {
-            const res = await updatePassword(Number(params.id), data.oldPassword, data.newPassword);
+            const res = await updatePassword(params.id, data.oldPassword, data.newPassword);
             if(res?.status === 400){
                 return NextResponse.json(res,{
                     status: 400

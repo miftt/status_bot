@@ -4,6 +4,7 @@ import { useState, MouseEventHandler, useRef, SyntheticEvent } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner"
+import { FiEdit } from "react-icons/fi";
 
 type User = {
     id: number;
@@ -68,8 +69,8 @@ const UpdateUser = ({ user }: { user: any }) => {
 
   return (
     <div>
-      <button className="btn btn-info btn-sm" onClick={handleModal}>
-        Edit 
+      <button className="btn btn-info btn-sm text-white" onClick={handleModal}>
+        <FiEdit/>
       </button>
       <div className={isOpen ? "modal modal-open" : "modal"} onClick={close} ref={overlay}>
         <div className="modal-box">

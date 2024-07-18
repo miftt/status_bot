@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 interface tokens {
     id: number;
-    userId: number;
+    userId: string;
     username: string;
 }
 
@@ -30,7 +30,7 @@ const DeleteToken: React.FC<tokens> = ({
         setIsOpen(!isOpen);
       };
     
-      const handleDelete = async (id: number, userId: number, username: string) => {
+      const handleDelete = async (id: number, userId: string, username: string) => {
         await axios.delete(`/api/tokens/${id}/${userId}`);
         toast.success(`Token for user ${username} has been deleted successfully`);
         router.refresh();

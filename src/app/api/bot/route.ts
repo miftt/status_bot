@@ -10,7 +10,7 @@ import { getDataBot } from '@/lib/prisma/service';
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(req.url);
-  const userId = Number(searchParams.get('userid'));
+  const userId = searchParams.get('userid') || '';
   if(!userId){
     return NextResponse.json({
       status: 400,
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     },{
       status: 401
     })
-  }else if(session?.user?.id !== Number(userId)){
+  }else if(session?.user?.id !== userId) {
     return NextResponse.json({
       status: 401,
       message: 'The session id not match with the user id',
@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = Number(searchParams.get('id'));
-  const userId = Number(searchParams.get('userId'));
+  const userId = searchParams.get('userId') || '';
   const token = searchParams.get('token');
 
   if (isNaN(id)) {
@@ -86,6 +86,7 @@ export async function POST(req: NextRequest) {
     botInfo: searchParams.get('botInfo') || '',
     userId: userId, // ID of the User
   };
+  console.log(botData)
   const existingBot = await prisma.listBot.findUnique({
     where: {
       id_userId: {
@@ -127,7 +128,14 @@ export async function POST(req: NextRequest) {
       status: 401
     });
   }
-
+  if(isActive?.status === 'Nonaktif'){
+    return NextResponse.json({
+      status: 403,
+      message: 'Status user ini tidak aktif. Hubungi Developer untuk memperbarui status.',
+    },{
+      status: 403
+    })
+  }
   if(userWithToken.expireDate < new Date()){
     const updateExpireDate = await prisma.user.update({
       where: {

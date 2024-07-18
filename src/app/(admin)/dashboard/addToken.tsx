@@ -14,7 +14,7 @@ type Tokens = {
 const AddToken = ({ tokens }: { tokens: any[] }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [userId, setUserId] = useState(Number(""));
+  const [userId, setUserId] = useState("");
   const [token, setToken] = useState("");
   const overlay = useRef(null);
   const close: MouseEventHandler = (e) => {
@@ -39,7 +39,7 @@ const AddToken = ({ tokens }: { tokens: any[] }) => {
       token: token,
       userId: userId,
     });
-    setUserId(Number(""));
+    setUserId("");
     setToken("");
     toast.success(`Token user with ID ${userId} added successfully`);
     router.refresh();
@@ -61,14 +61,14 @@ const AddToken = ({ tokens }: { tokens: any[] }) => {
             <div className="form-control w-full">
               <label className="label font-bold">User ID</label>
               <select
-                onChange={(e) => setUserId(Number(e.target.value))}
+                onChange={(e) => setUserId(e.target.value)}
                 className="select select-bordered"
               >
                 <option value="" disabled>
                   Select User ID
                 </option>
                 {tokens.map((token) => (
-                  <option value={Number(token.id)} key={token.id}>
+                  <option value={token.id} key={token.id}>
                     {token.id} | {token.username}
                   </option>
                 ))}

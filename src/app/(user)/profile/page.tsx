@@ -11,6 +11,7 @@ const fetcher  = (url: string) => fetch(url).then((res) => res.json());
 
 const ProfilePage = () => {
     const { data: session } = useSession();
+    console.log(session)
     const { data } = swr(`${process.env.NEXT_PUBLIC_API_URL}/api/tokens/${session?.user?.id}`, fetcher);
     const copyToClipboard = async (token: string) => {
         try {

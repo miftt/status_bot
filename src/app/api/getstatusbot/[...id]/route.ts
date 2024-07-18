@@ -17,7 +17,7 @@ export async function GET(req: Request, { params }: {params: {id: string, token:
             status: 401
         })
     }
-    const res = await getBotStatusPublicAPI(Number(params.id[0]), params.id[1]);
+    const res = await getBotStatusPublicAPI(params.id[0], params.id[1]);
     return new NextResponse(res, { status: 200 });
   }
   

@@ -34,6 +34,7 @@ const DashboardsPage = () => {
         .select('*')
         .eq('userId', userId)
         if(data){
+          console.log(data)
           setDataBot(data)
         }
       }

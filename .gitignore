@@ -16,6 +16,8 @@
 # production
 /build
 /prisma/migrations/20240125022306_32123
+/prisma
+/prisma backup
 
 # misc
 .DS_Store
